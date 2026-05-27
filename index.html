@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free online JSON formatter - Openapi cleaner. Runs entirely in your browser, no data sent anywhere.">
+  <title>JSON Formatter - Openapi cleaner | Devtil</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Import map: pinned ESM URLs for CDN-loaded libraries -->
+  <script type="importmap">
+  {
+    "imports": {
+      "js-yaml":    "https://esm.sh/js-yaml@4.1.0",
+      "jwt-decode": "https://esm.sh/jwt-decode@4.0.0"
+    }
+  }
+  </script>
+
+  <script
+    defer
+    src="https://cloud.umami.is/script.js"
+    data-website-id="44e8a570-dd8f-4cad-9ad8-8b3659f74c65"
+    data-domains="devtil.pages.dev,://devtil.pages.dev">
+  </script>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <a href="#/" class="logo">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M7 8l-3 3 3 3M15 8l3 3-3 3M13 7l-4 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Devtil
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" id="nav" aria-label="Tools"></nav>
+      </aside>
+      <main class="main" id="main"></main>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer-links">
+      <span>Made by <a href="https://github.com/telilabs" target="_blank" rel="noopener noreferrer">TeliLabs</a></span>
+      <span class="footer-sep" aria-hidden="true">·</span>
+      <a href="https://github.com/telilabs/devtil" target="_blank" rel="noopener noreferrer">View source</a>
+      <span class="footer-sep" aria-hidden="true">·</span>
+      <a href="https://www.linkedin.com/in/tarek-elidrissi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="tools/json-formatter.js"></script>
+  <script src="tools/curl-converter.js"></script>
+  <script src="tools/openapi-cleaner.js"></script>
+  <script src="tools/postman-minimizer.js"></script>
+  <script src="tools/json-yaml.js"></script>
+  <script src="tools/base64.js"></script>
+  <script src="tools/jwt-decoder.js"></script>
+  <script src="tools/timestamp.js"></script>
+  <script src="tools/generators.js"></script>
+
+  <!-- Load CDN libraries and expose as globals for classic tool scripts.
+       Module scripts are always deferred, so this runs after the classic
+       scripts above but before DOMContentLoaded → App.init(). -->
+  <script type="module">
+    import jsyaml from 'js-yaml';
+    import { jwtDecode } from 'jwt-decode';
+    window.jsyaml    = jsyaml;
+    window.jwtDecode = jwtDecode;
+  </script>
+</body>
+</html>
