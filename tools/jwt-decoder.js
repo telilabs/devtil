@@ -110,26 +110,6 @@ registerTool({
 
     function notify(msg, type) { App.notify(notifArea, msg, type); }
 
-    // ── Base64URL decode ──────────────────────────────────────────────────
-
-    function b64urlDecode(str) {
-      const standard = str.replace(/-/g, '+').replace(/_/g, '/');
-      const padded   = standard + '=='.slice(0, (4 - standard.length % 4) % 4);
-      try {
-        return atob(padded);
-      } catch {
-        throw new Error(`Invalid Base64URL in segment: "${str.slice(0,20)}…"`);
-      }
-    }
-
-    function decodeJson(segment) {
-      const raw = b64urlDecode(segment);
-      // Handle UTF-8 payload
-      const bytes = Uint8Array.from(raw, c => c.charCodeAt(0));
-      const text  = new TextDecoder().decode(bytes);
-      return JSON.parse(text);
-    }
-
     // ── Claims rendering ──────────────────────────────────────────────────
 
     const TIME_CLAIMS = new Set(['exp', 'iat', 'nbf']);
@@ -193,8 +173,8 @@ registerTool({
 
       let header, payload;
       try {
-        header  = decodeJson(parts[0]);
-        payload = decodeJson(parts[1]);
+        header  = window.jwtDecode(raw, { header: true });
+        payload = window.jwtDecode(raw);
       } catch (e) {
         notify(e.message, 'error');
         return;

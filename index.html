@@ -6,6 +6,17 @@
   <title>Devtil</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Import map: pinned ESM URLs for CDN-loaded libraries -->
+  <script type="importmap">
+  {
+    "imports": {
+      "js-yaml":    "https://esm.sh/js-yaml@4.1.0",
+      "jwt-decode": "https://esm.sh/jwt-decode@4.0.0"
+    }
+  }
+  </script>
+
   <script
     defer
     src="https://cloud.umami.is/script.js"
@@ -46,7 +57,6 @@
     </div>
   </footer>
 
-  <script src="vendor/js-yaml.min.js"></script>
   <script src="app.js"></script>
   <script src="tools/json-formatter.js"></script>
   <script src="tools/curl-converter.js"></script>
@@ -57,5 +67,15 @@
   <script src="tools/jwt-decoder.js"></script>
   <script src="tools/timestamp.js"></script>
   <script src="tools/generators.js"></script>
+
+  <!-- Load CDN libraries and expose as globals for classic tool scripts.
+       Module scripts are always deferred, so this runs after the classic
+       scripts above but before DOMContentLoaded → App.init(). -->
+  <script type="module">
+    import jsyaml from 'js-yaml';
+    import { jwtDecode } from 'jwt-decode';
+    window.jsyaml    = jsyaml;
+    window.jwtDecode = jwtDecode;
+  </script>
 </body>
 </html>
